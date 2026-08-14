@@ -22,6 +22,16 @@ router.get('/'  , async (req , res) => {
     }
 })
 
+router.get('/project/:projectId', async (req, res) => {
+  try {
+    const comments = await Comment.find({ project: req.params.projectId })
+
+    res.json(comments)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 // getting Comment by  id
 
 router.get('/:id' , async (req , res)  => {

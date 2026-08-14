@@ -10,11 +10,6 @@ router.get('/'  , async (req , res) => {
     try{
 
         const project = await Project.find()
-        
-        if(project.length === 0){
-            return  res.status(404).json({message: "No Projects Yet"})
-        }
-
         res.json(project)
 
     }catch(err){
@@ -80,6 +75,7 @@ router.put('/:id' , async (req , res) => {
             liveUrl: req.body.liveUrl,
             imageUrl: req.body.imageUrl,
             author: req.body.author,
+            likes: req.body.likes
         }
 
         const updatedProject = await Project.findByIdAndUpdate(req.params.id , updates , {new: true , runValidators: true})
