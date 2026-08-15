@@ -8,6 +8,7 @@ export default function ProjectDetail (){
     const [isDetails , setIsDetails] = useState(false)
     const [comments , setComment] = useState(null)
     const [showToast, setShowToast] = useState(false)
+    const [isLiked, setIsLiked] = useState(false)
     const [searchTerm , setSearchTerm] = useState({
         author: '' ,
         text: ''
@@ -47,6 +48,24 @@ export default function ProjectDetail (){
         setShowToast(true)
         setTimeout(() => setShowToast(false), 2500)
         setSearchTerm({ author: '', text: '' })
+    }
+
+    async function handleLike() {
+        setIsLiked(true)
+        setTimeout(() => setIsLiked(false), 300)
+
+        const res = await fetch(`http://localhost:3000/projects/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ likes: details.likes + 1 })
+        })
+
+        if (!res.ok) {
+            throw new Error('Network Response was not ok')
+        }
+
+        const data = await res.json()
+        setDetails(data.project)
     }
 
 
@@ -97,7 +116,12 @@ export default function ProjectDetail (){
 
                         <div className="flex justify-between items-center text-sm text-[#BAC095] border-t border-[#636B2F] pt-4">
                             <span>By {details.author}</span>
-                            <span>❤ {details.likes}</span>
+                            <button
+                                onClick={handleLike}
+                                className={`text-lg transition-transform duration-300 ${isLiked ? 'scale-150' : 'scale-100'}`}
+                                >
+                                ❤ {details.likes}
+                            </button>
                         </div>
 
                     </div>

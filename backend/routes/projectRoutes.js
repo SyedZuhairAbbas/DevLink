@@ -80,6 +80,7 @@ router.put('/:id' , async (req , res) => {
             liveUrl: req.body.liveUrl,
             imageUrl: req.body.imageUrl,
             author: req.body.author,
+            likes: req.body.likes
         }
 
         const updatedProject = await Project.findByIdAndUpdate(req.params.id , updates , {new: true , runValidators: true})
