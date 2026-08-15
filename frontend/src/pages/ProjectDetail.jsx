@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from 'react-router-dom'
 
 export default function ProjectDetail (){
     const {id} = useParams()
+    const navigate = useNavigate()
     const [details , setDetails] = useState(null)
     const [isDetails , setIsDetails] = useState(false)
     const [comments , setComment] = useState(null)
@@ -68,6 +69,16 @@ export default function ProjectDetail (){
         setDetails(data.project)
     }
 
+    async function handleDelete() {
+        const res = await fetch(`http://localhost:3000/projects/${id}`, {
+            method: 'DELETE'
+        })
+
+        if (!res.ok) throw new Error("Network Response was not Ok")
+
+        navigate('/')
+    }
+
 
     return (
         <div className="p-8 min-h-screen bg-[#1a1d0f]">
@@ -121,6 +132,13 @@ export default function ProjectDetail (){
                                 className={`text-lg transition-transform duration-300 ${isLiked ? 'scale-150' : 'scale-100'}`}
                                 >
                                 ❤ {details.likes}
+                            </button>
+
+                            <button
+                                onClick={handleDelete}
+                                className="text-red-400 hover:text-red-300 text-sm underline"
+                                >
+                                Delete Project
                             </button>
                         </div>
 

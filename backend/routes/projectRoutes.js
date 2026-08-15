@@ -10,11 +10,6 @@ router.get('/'  , async (req , res) => {
     try{
 
         const project = await Project.find()
-        
-        if(project.length === 0){
-            return  res.status(404).json({message: "No Projects Yet"})
-        }
-
         res.json(project)
 
     }catch(err){

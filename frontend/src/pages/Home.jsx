@@ -19,15 +19,21 @@ export default function Home(){
         <div  className='p-8 min-h-screen bg-[#1a1d0f]'>
             <div >
                 {isProject ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
-                        {projects.map(  project => (
+                    projects.length === 0 ? (
+                        <p className="text-[#D4DE95] text-center mt-10">
+                        No projects yet. Add one to get started!
+                        </p>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
+                        {projects.map(project => (
                             <div key={project._id}>
-                                <ProjectCard project={project} />
+                            <ProjectCard project={project} />
                             </div>
                         ))}
-                    </div>
+                        </div>
+                    )
                 ) : (
-                    <p> Loading Projects ...</p>
+                    <p>Loading Projects ...</p>
                 )}
             </div>
         </div>
